@@ -22,15 +22,33 @@ export function moveCounterClockwise() {
   };
 }
 
-export function selectAnswer() {}
+export function selectAnswer(answerId) {
+  return {
+    type: SET_SELECTED_ANSWER,
+    payload: answerId,
+  };
+}
 
-export function setMessage() {}
+export function setMessage(message) {
+  return { type: SET_INFO_MESSAGE, payload: message };
+}
 
-export function setQuiz() {}
+export function setQuiz() {
+  return (dispatch) => {
+    axios
+      .get("http://localhost:9000/api/quiz/next")
+      .then((res) => {
+        dispatch({ type: SET_QUIZ_INTO_STATE, payload: res.data });
+      })
+      .catch((err) => alert(err));
+  };
+}
 
-export function inputChange() {}
+export function inputChange(valueToChange, newValue) {
+  return { type: INPUT_CHANGE, payload: [valueToChange, newValue] };
+}
 
-export function resetForm() {}
+export function resetForm() { return({type: RESET_FORM}) 
 
 // ❗ Async action creators
 export function fetchQuiz() {
